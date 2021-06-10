@@ -52,10 +52,14 @@ jobs:
           name: production-files
           path: ./build
 
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          destination_dir: ${{github.ref}}
+          destination_dir: ${{steps.vars.outputs.short_ref}}
