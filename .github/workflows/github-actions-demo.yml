@@ -62,4 +62,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+          if: github.ref == 'refs/heads/main'
+          destination_dir: ''
+          if: github.ref != 'refs/heads/main'
           destination_dir: ${{steps.vars.outputs.short_ref}}
